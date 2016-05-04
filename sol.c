@@ -74,16 +74,12 @@ return;
 void sol_display_majors (char mjst1[6], char mjsp1[6], char mjst2[6],
             char mjsp2[6], double moontransit, double moonunder)
 {
-    printf ("\n\n");
-    printf ("Major Times");
 /*display earlier major time first*/
     if (moontransit < moonunder){
-        printf ("\n%s - %s", mjst1, mjsp1);
-        printf ("\n%s - %s", mjst2, mjsp2);
+        printf ("major: [{start: %s, stop: %s},{start: %s, stop: %s}]", mjst1, mjsp1, mjst2, mjsp2);
     }
     else {
-        printf ("\n%s - %s", mjst2, mjsp2);
-        printf ("\n%s - %s", mjst1, mjsp1);
+        printf ("major: [{start: %s, stop: %s},{start: %s, stop: %s}]", mjst2, mjsp2, mjst1, mjsp1);
     }
 return;
 }
@@ -113,16 +109,12 @@ return;
 void sol_display_minors (char mnst1[6], char mnsp1[6], char mnst2[6],
             char mnsp2[6], double moonrise, double moonset)
 {
-    printf ("\n");
-    printf ("Minor Times");
 /*display earlier minor time first*/
     if (moonrise < moonset){
-        printf ("\n%s - %s", mnst1, mnsp1);
-        printf ("\n%s - %s", mnst2, mnsp2);
+        printf ("minor: [{start: %s, stop: %s},{start: %s, stop: %s}]", mnst1, mnsp1, mnst2, mnsp2);
     }
     else {
-        printf ("\n%s - %s", mnst2, mnsp2);
-        printf ("\n%s - %s", mnst1, mnsp1);
+        printf ("minor: [{start: %s, stop: %s},{start: %s, stop: %s}]", mnst2, mnsp2, mnst1, mnsp1);
     }
 return;
 }
@@ -209,6 +201,6 @@ int dayscale;
     //printf ("\nphase scale = %d", phasedayscale);
     //printf ("\nsol scale = %d", soldayscale);
     dayscale = (soldayscale + phasedayscale);
-    printf ("\n\nTodays action is rated a %d (scale is 0 thru 5, 5 is the best)", dayscale);
+    printf ("dayscale: %d", dayscale);
 return;
 }

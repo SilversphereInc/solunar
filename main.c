@@ -22,9 +22,10 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "solunar.h"
 
-int main ()
+int main ( int argc, char *argv[] )
 {
 	int year, month, day;
 	int tz;					// time zone
@@ -43,7 +44,7 @@ int main ()
 //******************************************************************************
 //get date and position from user.
 
-	printf("\n\n");
+	/*printf("\n\n");
 	printf( "Input Year ( yyyy ) : " );
 	scanf( "%d", &year );
 	printf( "Input Month ( mm ) : " );
@@ -59,6 +60,16 @@ int main ()
 
     printf("\n\nSolunar data for ");
     printf ("%d / %d / %d\n", year, month, day);
+    */
+    if(argc != 7){
+    	return -1;
+    }
+    sscanf(argv[1],"%d",&year);
+    sscanf(argv[2],"%d",&month);
+    sscanf(argv[3],"%d",&day);
+    sscanf(argv[4],"%lf",&underlong);
+    sscanf(argv[5],"%lf",&ourlat);
+    sscanf(argv[6],"%d",&tz);
 
 //init some values
     UT = 0.0;
@@ -71,19 +82,21 @@ int main ()
 	get_rst ( object, date, ourlong, ourlat, &sunrise, &sunset, &suntransit);
 	object = 0;	//moon
 	get_rst ( object, date, ourlong, ourlat, &moonrise, &moonset, &moontransit);
+	printf("{");
 //get moon under-foot time
 	moonunder = get_underfoot(date, underlong);
 //get moon phase
 	moonphase = get_moon_phase (date);
 //get solunar minor periods
 	//only calculate if the minor periods do not overlap prev or next days
-	if (moonrise >= 1.0 & moonrise <= 23.0) {
+	//if (moonrise >= 1.0 & moonrise <= 23.0) {
 		sol_get_minor1(mnst1, mnsp1, moonrise);
-	}
-	if (moonset >= 1.0 & moonset <= 23.0) {
+	//}
+	//if (moonset >= 1.0 & moonset <= 23.0) {
 		sol_get_minor2(mnst2, mnsp2, moonset);
-	}
+	//}
 	sol_display_minors (mnst1, mnsp1, mnst2, mnsp2, moonrise, moonset);
+	printf(",");
 //get solunar major periods
 	//only calculate if the major periods do not overlap prev and next days*/
 	//if (moontransit >= 1.5 & moontransit <= 22.5) {
@@ -93,11 +106,12 @@ int main ()
 		sol_get_major2(mjst2, mjsp2, moonunder);
 	//}
 	sol_display_majors (mjst1, mjsp1, mjst2, mjsp2, moontransit, moonunder);
+	printf(",");
 //get day scale
 	phasedayscale = phase_day_scale (moonphase);
 	soldayscale = sol_get_dayscale (moonrise, moonset, moontransit, moonunder, sunrise, sunset);
 	sol_display_dayscale (soldayscale, phasedayscale);
+	printf("}\n");
 /*thats it, we are done*/
-	printf("\n");
 return 0;
 }
