@@ -1,0 +1,56 @@
+solunar0.0.5
+
+This release consists of:
+Three source files:  main.c, sol.c, astro.c
+One header file:  solunar.h
+And one Makefile:  Makefile
+And this README file.
+
+
+For more information, please visit:
+The project web site:  http://solunar.sf.net/
+The project site on sf:  http://sourceforge.net/projects/solunar/
+
+Or contact:
+The Author:  Douglas Bacon, dugbdev@users.sourceforge.net
+
+
+The goal of the solunar project is to provide an open source Solunar Tables prediction solution.
+Solunar Tables are used to predict the most active days and times of day for fish and game.
+It will be  useful for fishing and hunting.
+
+
+I have been unable to find in detail a clear explanation of when the solunar times actually occur.
+For this prototype I am using the  following rules:
+
+Minor Times last one hour and occur at moonrise and moonset.
+Major Times last two hours and occur during the moon transits.
+The current release will not report a Major or Minor time if it overlaps with the previous or next day.
+
+Rules for daily action prediction:
+Scale is 0-5 with 5 being the best, initially scale is set to 0.
+	add 1 for each solunar period that occurs within 30 minutes of sunset or sunrise, max of 2.
+	add 1 id day is with in approx 3 days of a new or full moon.
+	add 2 if day is with in approx 2 days of a new or full moon.
+	add 3 if day is a full or new moon.
+
+Any of these rule may modified in future versions.
+
+
+This release will ask the user for the following input:
+	year
+ 	month
+ 	day
+ 	latitude
+ 	longitude
+	time zone
+and output the following:
+	moon phase
+ 	moon rise
+ 	moon set
+ 	moon transit
+ 	sun rise
+ 	sun set
+ 	minor solunar times
+ 	major solunar times
+	Daily action prediction scale, 0-5 with 5 being the best.
