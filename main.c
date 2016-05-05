@@ -78,11 +78,11 @@ int main ( int argc, char *argv[] )
 	JD = get_julian_date (year, month, day, UT);
 	date = (JD - 2400000.5 - zone);
 //get rise set times for moon and sun
+	printf("{");
 	object = 1;	//sun
 	get_rst ( object, date, ourlong, ourlat, &sunrise, &sunset, &suntransit);
 	object = 0;	//moon
 	get_rst ( object, date, ourlong, ourlat, &moonrise, &moonset, &moontransit);
-	printf("{");
 //get moon under-foot time
 	moonunder = get_underfoot(date, underlong);
 //get moon phase
