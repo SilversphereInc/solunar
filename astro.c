@@ -114,10 +114,10 @@ int get_rst (int object, double date, double ourlong, double ourlat,
 		doesTransit = 1;
 	}
 	if (object == 0){
-		printf("\nMOON");
+		printf("\"moon\":{");
 	}
 	else {
-		printf("\n\nSUN");
+		printf("\"sun\":{");
 	}
 	//logic to sort the various rise, transit set states
 	// nested if's...sorry
@@ -126,19 +126,21 @@ int get_rst (int object, double date, double ourlong, double ourlat,
 			*Rise = riseTime;
 			snprintf(eventName, 6, "rise");
 			display_event_time(riseTime, eventName);
+			printf(",");
 		}
 		else {
 			*Rise = 0.0;
-			printf ("\ndoes not rise");
+			//printf ("\ndoes not rise");
 		}
 		if (doesTransit == 1) {
 			*Transit = transitTime;
 			snprintf(eventName, 8, "transit");
 			display_event_time(transitTime, eventName);
+			printf(",");
 		}
 		else {
 			*Transit = 0.0;
-			printf ("\ndoes not transit");
+			//printf ("\ndoes not transit");
 		}
 		if (doesSet == 1) {
 			*Set = setTime;
@@ -147,16 +149,17 @@ int get_rst (int object, double date, double ourlong, double ourlat,
 		}
 		else {
 			*Set = 0.0;
-			printf ("\ndoes not set");
+			//printf ("\ndoes not set");
 		}
+		printf("},");
 
 	}
 	else { //current object not so simple
 		if (above == 1) {
-			printf ("\nalways above horizon");
+			//printf ("\nalways above horizon");
 		}
 		else {
-			printf ("\nalways below horizon");
+			//printf ("\nalways below horizon");
 		}
 	}
 	//thats it were done.
@@ -182,7 +185,7 @@ void display_event_time (double time, char event [6])
 {
 	char sTime[6];
 	convert_time_to_string (sTime, time);
-	printf("\n %s = %s",event, sTime);
+	printf("\"%s\":\"%s\"",event, sTime);
 return;
 }
 
@@ -508,28 +511,28 @@ if (PriPhaseOccurs == 1){
         if ((minarray[i] < minarray[i+1]) && (minarray[i] < 0.1)) {
             illumin = 0;
             age = 0.0;
-            snprintf(PhaseName, 16, "NEW");
+            snprintf(PhaseName, 16, "new");
             break;
         }
         //check for a full moon
         if ( (minarray[i] > minarray[i+1]) && (minarray[i] > 99) ){
             illumin = 100;
             age = 14.0;
-            snprintf(PhaseName, 16, "FULL");
+            snprintf(PhaseName, 16, "full");
             break;
         }
         //check for a first quarter
         if ( (minarray[i] < minarray[i+1]) && (minarray[i] > 50) && (minarray[i] < 51)){
             illumin = 50;
             age = 7.0;
-            snprintf(PhaseName, 16, "First Quarter");
+            snprintf(PhaseName, 16, "first quarter");
             break;
         }
         //check for a last quarter
         if ( (minarray[i] > minarray[i+1]) && (minarray[i] < 50) && (minarray[i] > 49) ){
             illumin = 50;
             age = 21.0;
-            snprintf(PhaseName, 16, "Last Quarter");
+            snprintf(PhaseName, 16, "last quarter");
             break;
         }
         PriPhaseTime = PriPhaseTime + 0.016667;
@@ -570,19 +573,19 @@ else {
 			snprintf(PhaseName, 16, "waxing gibbous");
 		}
 		else {
-		    printf("\nERROR, no moon phase was found\n");
+		    snprintf(PhaseName, 16, "unknown");
 		}
 }
 if (PriPhaseOccurs == 1){
     char sTime[6];
     convert_time_to_string (sTime, PriPhaseTime);
-    printf("\n phase is %s at %s, ", PhaseName, sTime);
+    printf("\"moon_phase\":\"%s\",\"moon_phase_time\":\"%s\",", PhaseName, sTime);
 }
 else{
-    printf("\n phase is %s, ", PhaseName);
+    printf("\"moon_phase\":\"%s\",", PhaseName);
 }
-	printf("%2.1f%% illuminated, ", illumin);
-    printf("%2.1f days since new\n", age);
+	printf("\"moon_illumination\":\"%2.1f%%\",", illumin);
+    printf("\"days_since_new\":\"%2.1f\",", age);
 return illumin;
 }
 /******************************************************************************/
@@ -678,11 +681,12 @@ double get_underfoot (double date, double underlong)
 	char eventName[11];
 	moonunderTime = get_transit (0, date, 0, underlong);
 	if (moonunderTime != 0.0) {
-		snprintf(eventName, 11, "under foot");
+		snprintf(eventName, 11, "under_foot");
 		display_event_time(moonunderTime, eventName);
+		printf(",");
 	}
 	else {
-			printf ("\nMoon does not transit under foot");
+			//printf ("\nMoon does not transit under foot");
 	}
 
 	return moonunderTime;
