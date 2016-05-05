@@ -126,21 +126,23 @@ int get_rst (int object, double date, double ourlong, double ourlat,
 			*Rise = riseTime;
 			snprintf(eventName, 6, "rise");
 			display_event_time(riseTime, eventName);
-			printf(",");
+			if(doesTransit == 1 || doesSet == 1){
+				printf(",");
+			}
 		}
 		else {
 			*Rise = 0.0;
-			//printf ("\ndoes not rise");
 		}
 		if (doesTransit == 1) {
 			*Transit = transitTime;
 			snprintf(eventName, 8, "transit");
 			display_event_time(transitTime, eventName);
-			printf(",");
+			if(doesSet == 1){
+				printf(",");
+			}
 		}
 		else {
 			*Transit = 0.0;
-			//printf ("\ndoes not transit");
 		}
 		if (doesSet == 1) {
 			*Set = setTime;
@@ -149,7 +151,6 @@ int get_rst (int object, double date, double ourlong, double ourlat,
 		}
 		else {
 			*Set = 0.0;
-			//printf ("\ndoes not set");
 		}
 		printf("},");
 
